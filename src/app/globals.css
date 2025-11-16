@@ -3,33 +3,48 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: stable;
-  }
+    .text-balance {
+        text-wrap: stable;
+    }
 }
 
+.header-title {
+    @apply text-4xl font-bold text-blue-500;
+}
 
+.header-subtitle {
+    @apply text-lg text-gray-700;
+}
+
+.section-container {
+    @apply p-4 rounded-md bg-gray-50 dark:bg-gray-900;
+}
+
+.link-external {
+    @apply block text-blue-500 hover:underline;
+}
+
+.card-link {
+    @apply p-2 rounded bg-gray-800 hover:bg-gray-900;
+}
