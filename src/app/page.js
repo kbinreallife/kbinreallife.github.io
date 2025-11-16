@@ -122,7 +122,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                 >
                   <div className="p-2 rounded bg-gray-800 hover:bg-gray-900">
-                    The Organization I Volunteer for
+                    The Organization I Work For
                   </div>
                 </a>
               </div>
