@@ -17,7 +17,6 @@ export default function Home() {
         <Head>
           <title>thekbsareinsidethecomputer</title>
           <meta name="description" content="what is this, a website for ants?" />
-          <link rel="icon" href="/favicon.ico" />
         </Head>
 
         {/* Header */}
