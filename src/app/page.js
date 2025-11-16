@@ -1,31 +1,10 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
+import { useSectionToggle } from '../context/SectionToggleContext';
 
 export default function Home() {
-  const [showSection, setShowSection] = useState(null);
-  const outsideClickListener = useRef(null);
-
-  const toggleSection = (section) => {
-    setShowSection(showSection === section ? null : section);
-  };
-
-  const hideAllSections = () => {
-    setShowSection(null);
-  };
-
-  useEffect(() => {
-    outsideClickListener.current = (event) => {
-      if (!event.target.closest('.nav-btn')) {
-        hideAllSections();
-      }
-    };
-    document.addEventListener('click', outsideClickListener.current);
-    return () => {
-      document.removeEventListener('click', outsideClickListener.current);
-    };
-  }, []);
+  const { openSection, toggleSection } = useSectionToggle();
 
   const handleClickBtn = (section) => (event) => {
     event.stopPropagation();
@@ -38,7 +17,6 @@ export default function Home() {
         <Head>
           <title>thekbsareinsidethecomputer</title>
           <meta name="description" content="what is this, a website for ants?" />
-          <link rel="icon" href="/favicon.ico" />
         </Head>
 
         {/* Header */}
@@ -61,7 +39,7 @@ export default function Home() {
               <button
                 type="button"
                 className="text-blue-500 hover:underline nav-btn"
-                aria-expanded={showSection === 'about'}
+                aria-expanded={openSection === 'about'}
                 onClick={handleClickBtn('about')}
               >
                 About
@@ -71,7 +49,7 @@ export default function Home() {
               <button
                 type="button"
                 className="text-blue-500 hover:underline nav-btn"
-                aria-expanded={showSection === 'projects'}
+                aria-expanded={openSection === 'projects'}
                 onClick={handleClickBtn('projects')}
               >
                 Projects
@@ -81,7 +59,7 @@ export default function Home() {
               <button
                 type="button"
                 className="text-blue-500 hover:underline nav-btn"
-                aria-expanded={showSection === 'contact'}
+                aria-expanded={openSection === 'contact'}
                 onClick={handleClickBtn('contact')}
               >
                 Contact
@@ -93,7 +71,7 @@ export default function Home() {
         {/* Sections */}
         <div className="mt-8">
           {/* About Me Section */}
-          {showSection === 'about' && (
+          {openSection === 'about' && (
             <div className="rounded-md p-4 bg-gray-50 dark:bg-gray-900">
               <h2 className="text-lg font-bold mb-2">About Me</h2>
               <p>
@@ -103,28 +81,48 @@ export default function Home() {
           )}
 
           {/* Projects Section */}
-          {showSection === 'projects' && (
+          {openSection === 'projects' && (
             <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-900">
               <h2 className="text-lg font-bold mb-2">Projects and Skills</h2>
               <div className="space-y-2">
-                <a href="https://skillsoft.digitalbadges.skillsoft.com/profile/kylebutcher440290/wallet#gs.9wuh1h" className="block text-blue-500">
+                <a
+                  href="https://skillsoft.digitalbadges.skillsoft.com/profile/kylebutcher440290/wallet#gs.9wuh1h"
+                  className="block text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <div className="p-2 rounded bg-gray-800 hover:bg-gray-900">
                     My Badges and Certificates
                   </div>
                 </a>
-                <a href="https://github.com/kbinreallife/github-pages-next-tailwind-boilerplate" className="block text-blue-500">
+                <a
+                  href="https://github.com/kbinreallife/github-pages-next-tailwind-boilerplate"
+                  className="block text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <div className="p-2 rounded bg-gray-800 hover:bg-gray-900">
                     Boilerplate project to make websites like this one
                   </div>
                 </a>
-                <a href="https://github.com/kbinreallife/kbinreallife-Github_Activity_Visualizer" className="block text-blue-500">
+                <a
+                  href="https://github.com/kbinreallife/kbinreallife-Github_Activity_Visualizer"
+                  className="block text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <div className="p-2 rounded bg-gray-800 hover:bg-gray-900">
                     A Github Organization Activity Visualizer
                   </div>
                 </a>
-                <a href="https://comcode.org" className="block text-blue-500">
+                <a
+                  href="https://comcode.org"
+                  className="block text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <div className="p-2 rounded bg-gray-800 hover:bg-gray-900">
-                    The Organization I Volunteer for
+                    The Organization I Work For
                   </div>
                 </a>
               </div>
@@ -132,7 +130,7 @@ export default function Home() {
           )}
 
           {/* Contact Section */}
-          {showSection === 'contact' && (
+          {openSection === 'contact' && (
             <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-900">
               <h2 className="text-lg font-bold mb-2">Contact</h2>
               <div className="flex flex-col space-y-4">
