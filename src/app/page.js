@@ -1,5 +1,5 @@
+'use client';
 import React from "react";
-'use client'
 
 import Head from 'next/head';
 import { useSectionToggle } from '../context/SectionToggleContext';
