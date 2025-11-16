@@ -17,5 +17,7 @@ export function SectionToggleProvider({ children }) {
 }
 
 export function useSectionToggle() {
-  return useContext(SectionToggleContext);
+  const context = useContext(SectionToggleContext);
+  if (!context) throw new Error("useSectionToggle must be used within a SectionToggleProvider");
+  return context;
 }
