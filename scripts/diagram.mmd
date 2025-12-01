@@ -1,0 +1,68 @@
+
+flowchart TD
+    %% Central Orchestrator Upgrade Service – Portfolio Version
+
+    %% Client Layer
+    C["Authorized Callers"]:::client
+
+    %% Orchestrator
+    P["player_two.upgrades<br>Central Orchestrator"]:::orchestrator
+
+    %% Internal Services
+    UM["User Map Router"]:::internal
+    Q["Query + Sort Engine"]:::internal
+    W["Withdrawal Coordinator"]:::internal
+
+    %% Logs & Tracing
+    DB["#db<br>upgrade_logs"]:::logdb
+    H["History Tracer"]:::internal
+
+    %% Shards
+    subgraph "Distributed Data Shards"
+        direction LR
+        S1["tk.upgrades<br>[Shard 1]"]:::shard
+        S2["kbeeb.upgrades<br>[Shard 2]"]:::shard
+        S3["available.upgrades<br>[Shard 3]"]:::shard
+        Srest["⋯ 23 more shards"]:::shard
+    end
+
+    %% Flow connections
+    C -- "API Call" --> P
+
+    %% Central orchestration: Orchestrator to internal services
+    P --> UM
+    P --> Q
+    P --> W
+    P --> DB
+    DB --> H
+    H --> P
+
+    %% Orchestrator to Shards (Dispatch)
+    UM -- "Dispatch/Map User" --> S1
+    UM --> S2
+    UM --> S3
+    UM --> Srest
+
+    %% Data retrieval: Shards back to orchestrator
+    S1 -- "#ms.sys.upgrades_of_owner" --> P
+    S2 --> P
+    S3 --> P
+    Srest -- "..." --> P
+
+    %% Withdrawals: Coordinator to shards
+    W -- "#ls.sys.xfer_upgrade_to_caller" --> S1
+    W --> S2
+    W --> S3
+    W --> Srest
+
+    %% Class Definitions
+    classDef orchestrator fill:#1e40af,stroke:#3b82f6,stroke-width:2.5px,color:#fff;
+    classDef shard fill:#1e3a8a,stroke:#60a5fa,stroke-width:1.5px,color:#e2e8f0;
+    classDef client fill:#7c3aed,stroke:#a78bfa,color:#fff;
+    classDef logdb fill:#be185d,stroke:#f472b6,color:#fff;
+    classDef internal fill:#0e7490,stroke:#22d3ee,color:#fff;
+    class C client
+    class P orchestrator
+    class S1,S2,S3,Srest shard
+    class UM,Q,W,H internal
+    class DB logdb

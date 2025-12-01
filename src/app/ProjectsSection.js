@@ -4,6 +4,9 @@ import ExternalLink from "./ExternalLink";
 export default function ProjectsSection() {
   return (
     <div className="space-y-2">
+      <ExternalLink href="/architecture-diagram">
+        Hackmud Upgrade System Architecture (Interactive Diagram)
+      </ExternalLink>
       <ExternalLink href="https://skillsoft.digitalbadges.skillsoft.com/profile/kylebutcher440290/wallet#gs.9wuh1h">
         My Badges and Certificates
       </ExternalLink>
